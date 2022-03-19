@@ -11,6 +11,18 @@ class MoviesController < ApplicationController
     render json: movie
   end
 
+  #REST conventions would have these be in a separate controller, Movies::SummaryController
+  def summary #show
+    movie = Movie.find(params[:id])
+    render json: movie, serializer: MovieSummarySerializer
+  end
+
+  def summaries #index
+    movies = Movie.all
+    render json: movies, each_serializer: MovieSummarySerializer
+  end
+  ##########
+
   private
 
   def render_not_found_response
